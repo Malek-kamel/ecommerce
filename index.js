@@ -10,6 +10,7 @@ import productRouter from "./src/modules/product/product.router.js";
 import cartRouter from "./src/modules/cart/cart.router.js";
 import orderRouter from "./src/modules/order/order.router.js";
 import reviewRouter from "./src/modules/review/review.router.js";
+import cors from 'cors'
 
 dotenv.config();
 
@@ -18,16 +19,17 @@ const app = express();
 const port = process.env.PORT;
 await connectDB();
 // CORS
-const whitlist = ["http://127.0.0.1:5500"];
-app.use((req, res, next) => {
-  if (!whitlist.includes(req.header("origin")))
-    return next(new Error("Blocked By CORS !"));
-  res.setHeader("Access-Control-Allow-origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Private-Network", true);
-  return next()
-});
+// const whitlist = ["http://127.0.0.1:5500"];
+// app.use((req, res, next) => {
+//   if (!whitlist.includes(req.header("origin")))
+//     return next(new Error("Blocked By CORS !"));
+//   res.setHeader("Access-Control-Allow-origin", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "*");
+//   res.setHeader("Access-Control-Allow-Private-Network", true);
+//   return next()
+// });
+app.use(cors())
 app.use(express.json());
 
 app.use("/auth", authRouter);
